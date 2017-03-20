@@ -1,0 +1,72 @@
+1.
+SELECT name FROM world
+WHERE population >
+   (SELECT population FROM world
+    WHERE name='Russia')
+    
+2.
+Select name From world
+Where continent='Europe'
+  And gdp/population > (
+      Select percap=gdp/population
+      From world
+      Where name='United Kingdom')
+      
+3.
+Select name, continent
+From world
+Where continent In (
+   Select continent From world
+   Where name='Argentina' or name='Australia')
+Order By name
+
+4.
+Select name, population
+From world
+Where population > (
+  Select population From world
+  Where name='Canada')
+  And
+  population < (
+  Select population From world
+  Where name='Poland')
+  
+5.
+Select name,  
+  Concat(Cast(Round(population*100/(Select population 
+                                From world Where name='Germany'),0) As Numeric (36,2)), '%')
+From world
+Where continent='Europe'
+
+6.
+Select name From world
+Where gdp > All(Select gdp
+                                        From world
+                                        Where gdp>0
+                                          And
+                                              continent='Europe')
+                                              
+7.
+SELECT continent, name, area FROM world x
+  WHERE area >= ALL
+    (SELECT area FROM world y
+        WHERE y.continent=x.continent
+          AND area>0)
+
+8.
+Select continent, name From world x
+Where name <= All(Select name From world y
+                  Where y.continent=x.continent
+                    And name is Not Null)
+                    
+9.
+Select name, continent, population From world x
+Where 25000000 >= All(Select population From world y
+                      Where x.continent=y.continent
+                        And population > 0)
+
+10.
+Select name, continent From world x
+Where population > All(Select population*3 From world y
+                       Where y.continent=x.continent
+                         And y.name!=x.name)
