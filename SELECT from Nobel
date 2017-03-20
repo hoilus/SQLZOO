@@ -1,0 +1,75 @@
+1.
+SELECT yr, subject, winner
+  FROM nobel
+ WHERE yr = 1950
+ 
+2.
+SELECT winner
+  FROM nobel
+ WHERE yr = 1962
+   AND subject = 'Literature'
+   
+3.
+Select yr, subject
+From nobel
+Where winner Like 'Albert Einstein%'
+
+4.
+Select winner
+From nobel
+Where subject = 'Peace' And yr >= 2000
+
+5.
+Select yr, subject, winner
+From nobel
+Where subject='Literature' And yr >= 1980 And yr <=1989
+
+6.
+SELECT * FROM nobel
+WHERE winner IN ('Theodore Roosevelt',
+                'Woodrow Wilson',
+                'Jimmy Carter')
+                
+7.
+Select winner
+From nobel
+Where winner Like 'John %'
+
+8.
+Select *
+From nobel
+Where (subject='Physics' And yr=1980)
+   or (subject='Chemistry' And yr=1984)
+   
+9.
+Select *
+From nobel
+Where yr=1980 And subject Not In ('Chemistry', 'Medicine')
+
+10.
+Select *
+From nobel
+Where (subject='Medicine' And yr<1910)
+   or (subject='Literature' And yr>=2004)
+   
+11.
+Select *
+From nobel
+Where winner Like N'Peter GRÜNBERG'
+
+12.
+Select * From nobel
+Where winner Like N'EUGENE O_NEILL%'
+
+13.
+Select winner, yr, subject From nobel
+Where winner Like N'Sir %'
+Order By yr Desc, winner
+
+14.
+SELECT winner, subject
+FROM nobel
+WHERE yr=1984
+ORDER BY Case When subject In ('Physics','Chemistry') Then 1 Else 0 End,
+         subject,
+         winner
