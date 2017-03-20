@@ -1,0 +1,76 @@
+1.
+SELECT name, continent, population FROM world
+
+2.
+SELECT name FROM world
+WHERE population >= 200000000
+
+3.
+Select name, gdp/population As PCGDP
+From world
+Where population >= 200000000
+
+4.
+Select name, population/1000000 As populationInMill
+From world
+Where continent = 'South America'
+
+5.
+Select name, population
+From World
+Where name In ('France', 'Germany', 'Italy')
+
+6.
+Select name
+From World
+Where name Like '%United%'
+
+7.
+Select name, population, area
+From World
+Where area > 3000000 or population > 250000000
+
+8.
+Select name, population, area
+From World
+Where (not (area > 3000000) And population > 250000000) Or (area > 3000000 And not (population > 250000000))
+
+9.
+Select name, Round(population/1000000,2) As populationInMill, Round(gdp/1000000000,2) As GDPInBill
+From World
+Where continent = 'South America'
+
+10.
+Select name, Round(gdp/population, -3) As percapitaGDP
+From World
+Where gdp >= 1000000000000
+
+11.
+SELECT name, 
+       CASE WHEN continent='Oceania' THEN 'Australasia'
+            ELSE continent END
+  FROM world
+ WHERE name LIKE 'N%'
+ 
+12.
+Select name,
+    Case When continent='Europe' Then 'Eurasia'
+         When continent='Asia' Then 'Eurasia'
+         When continent='North America' Then 'America'
+         When continent='South America' Then 'America'
+         When continent='Caribbean' Then 'America'
+         Else continent End
+From World
+Where name Like '[AB]%'
+
+13.
+SELECT name, continent,
+  Case When continent='Oceania' Then 'Australasia'
+       When continent='Eurasia' Then 'Europe/Asia'
+       When name='Turkey' Then 'Europe/Asia'
+       When continent='Caribbean' And name Like 'B%' Then 'North America'
+       When continent='Caribbean' And name Not Like 'B%' Then 'South America'
+       Else continent End
+FROM world
+WHERE tld IN ('.ag','.ba','.bb','.ca','.cn','.nz','.ru','.tr','.uk')
+Order By name ASC
