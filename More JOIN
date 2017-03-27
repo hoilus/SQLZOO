@@ -1,0 +1,54 @@
+1.
+SELECT id, title
+ FROM movie
+ WHERE yr=1962
+ 
+2.
+Select yr
+From movie
+Where title = 'Citizen Kane'
+
+3.
+Select id, title, yr
+From movie
+Where title Like '%Star Trek%'
+Order By yr
+
+4.
+Select id
+From actor
+Where name = 'Glenn Close'
+
+5.
+Select id
+From movie
+Where title = 'Casablanca'
+
+6.
+Select name
+From actor Inner Join Casting On id = actorid
+Where movieid = 27
+
+7.
+Select actor.name
+From actor Inner Join Casting On actor.id = Casting.actorid
+  Inner Join movie On Casting.movieid = movie.id
+Where movie.title = 'Alien'
+
+8.
+Select movie.title
+From movie Inner Join Casting On movie.id = Casting.movieid
+  Inner Join actor On Casting.actorid = actor.id
+Where actor.name = 'Harrison Ford'
+
+9.
+Select movie.title
+From movie Inner Join Casting On movie.id = Casting.movieid
+  Inner Join actor On Casting.actorid = actor.id
+Where actor.name = 'Harrison Ford' And Casting.ord != 1
+
+10.
+Select movie.title, actor.name
+From movie Inner Join Casting On movie.id = Casting.movieid
+  Inner Join actor On actor.id = Casting.actorid
+Where Casting.ord = 1 And movie.yr = 1962
