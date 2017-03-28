@@ -52,3 +52,50 @@ Select movie.title, actor.name
 From movie Inner Join Casting On movie.id = Casting.movieid
   Inner Join actor On actor.id = Casting.actorid
 Where Casting.ord = 1 And movie.yr = 1962
+
+11.
+SELECT yr,COUNT(title) FROM
+  movie JOIN casting ON movie.id=movieid
+         JOIN actor   ON actorid=actor.id
+where name='John Travolta'
+GROUP BY yr
+HAVING COUNT(title)=(SELECT MAX(c) FROM
+(SELECT yr,COUNT(title) AS c FROM
+   movie JOIN casting ON movie.id=movieid
+         JOIN actor   ON actorid=actor.id
+ where name='John Travolta'
+ GROUP BY yr) AS t
+)
+
+12.
+SELECT movie.title, actor.name
+From movie Inner Join Casting On movie.id = Casting.movieid
+  Inner Join actor On Casting.actorid = actor.id
+WHERE actor.name='Julie Andrews'
+  And Casting.ord = 1
+  
+13.
+Select actor.name
+From actor Inner Join Casting On actor.id = Casting.actorid
+  Inner Join movie On movie.id = Casting.movieid
+Group By actor.name
+Having Count(title)>=30
+
+14.
+Select title, Count(actor.name) as num
+From actor Inner Join Casting On actor.id = Casting.actorid
+  Inner Join movie On movie.id = Casting.movieid
+Where yr = 1978
+Group By title
+Order By num Desc, title
+
+15.
+Select Distinct(actor.name)
+From actor Inner Join Casting On actor.id = Casting.actorid
+  Inner Join movie On movie.id = Casting.movieid
+Where title In (Select title
+  From actor Inner Join Casting On actor.id = Casting.actorid
+    Inner Join movie On movie.id = Casting.movieid
+  Where actor.name = 'Art Gartunkel')
+  And
+  actor.name != 'Art Gartunkel'
