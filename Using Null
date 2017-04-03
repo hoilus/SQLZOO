@@ -1,0 +1,53 @@
+1.
+Select teacher.name
+From teacher
+Where teacher.dept Is NULL
+
+2.
+SELECT teacher.name, dept.name
+ FROM teacher INNER JOIN dept
+           ON (teacher.dept=dept.id)
+           
+3.
+Select teacher.name, dept.name
+From teacher Left Outer Join dept
+  on teacher.dept = dept.id
+  
+4.
+Select teacher.name, dept.name
+From dept Left Outer Join teacher
+  on dept.id = teacher.dept
+  
+5.
+Select teacher.name, Coalesce(teacher.mobile, '07986 444 2266') As mobile
+From teacher
+
+6.
+Select teacher.name, Coalesce(dept.name, 'None') As deptname
+From teacher Left Join dept On dept.id = teacher.dept
+
+7.
+Select Count(teacher.name) As numteach, Count(teacher.mobile) As numphone
+From teacher
+
+8.
+Select dept.name, Count(teacher.name) As nums
+From teacher Right Outer Join dept On dept.id = teacher.dept
+Group By dept.name
+
+9.
+Select teacher.name,
+       Case When teacher.dept = 1 Then 'Sci'
+            When teacher.dept = 2 Then 'Sci'
+            Else 'Art'
+            End As name
+From teacher
+
+10.
+Select teacher.name,
+       Case When teacher.dept = 1 Then 'Sci'
+            When teacher.dept = 2 Then 'Sci'
+            When teacher.dept = 3 Then 'Art'
+            Else 'None'
+            End As name
+From teacher
