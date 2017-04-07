@@ -1,0 +1,77 @@
+1.
+Select Count(id)
+From stops
+
+2.
+Select id
+From stops
+Where name = 'Craiglockhart'
+
+3.
+Select stops.id, stops.name
+From stops Inner Join route On stops.id = route.stop
+Where route.num = '4' and route.company = 'LRT'
+
+4.
+SELECT company, num, COUNT(*)
+FROM route WHERE stop=149 OR stop=53
+GROUP BY company, num
+Having COUNT(*)=2
+
+5.
+SELECT a.company, a.num, a.stop, b.stop
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+WHERE a.stop=53 and b.stop = 149
+
+6.
+SELECT a.company, a.num, stopa.name, stopb.name
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' and stopb.name='London Road'
+
+7.
+Select a.company, a.num
+From route as a Inner Join route as b On 
+     (a.num = b.num And a.company = b.company)
+Where a.stop = 115 And b.stop=137
+Group By a.company, a.num
+
+8.
+Select a.company, a.num
+From route as a Inner Join route as b On
+     (a.num = b.num And a.company = b.company)
+     Inner Join stops as stopa On (a.stop = stopa.id)
+     Inner Join stops as stopb On (b.stop = stopb.id)
+Where stopa.name = 'Craiglockhart' And stopb.name = 'Tollcross'
+Group By a.company, a.num
+
+9.
+Select stopb.name, a.company, a.num
+From route as a Inner Join route as b On
+     (a.num = b.num And a.company = b.company)
+     Inner Join stops as stopa On (a.stop = stopa.id)
+     Inner Join stops as stopb On (b.stop = stopb.id)
+Where stopa.name = 'Craiglockhart' And a.company = 'LRT'
+
+10.
+Select Distinct FromCraig.Fromnum, FromCraig.Fromcompany, FromCraig.Fromname, ToSight.Tonum, ToSight.Tocompany
+From (
+Select stopb.name as Fromname, stopb.id as Fromid, a.company as Fromcompany, a.num as Fromnum, b.num as bnum
+From route as a Inner Join route as b On
+     (a.num = b.num And a.company = b.company)
+     Inner Join stops as stopa On (a.stop = stopa.id)
+     Inner Join stops as stopb On (b.stop = stopb.id)
+Where stopa.name = 'Craiglockhart'
+) as FromCraig Inner Join (
+Select stopd.name as Toname, c.company as Tocompany, c.num as Tonum, d.num as dnum
+From route as c Inner Join route as d On
+     (c.num = d.num And c.company = d.company)
+     Inner Join stops as stopc On (c.stop = stopc.id)
+     Inner Join stops as stopd On (d.stop = stopd.id)
+Where stopc.name = 'Sighthill'
+) as ToSight
+  On (FromCraig.Fromname = ToSight.Toname)
+Order By LENGTH(FromCraig.Fromnum), FromCraig.bnum, FromCraig.Fromid, LENGTH(ToSight.Tonum), ToSight.dnum
